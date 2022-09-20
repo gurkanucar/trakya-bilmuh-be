@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +27,10 @@ public class UserService {
         existing.setName(user.getName());
         existing.setUsername(user.getUsername());
         return userRepository.save(user);
+    }
+
+    public Optional<User> findUserByID(Long id) {
+        return userRepository.findById(id);
     }
 
     public User setApproved(User user, boolean approved) {
