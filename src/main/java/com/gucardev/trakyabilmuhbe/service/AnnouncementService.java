@@ -13,6 +13,7 @@ public class AnnouncementService {
 
     private final AnnouncementRepository announcementRepository;
 
+
     public Announcement create(Announcement announcement) {
         return announcementRepository.save(announcement);
     }
