@@ -26,8 +26,8 @@ public class AnnouncementService {
         return announcementRepository.save(existing);
     }
 
-    public void delete(Announcement announcement) {
-        Announcement existing = announcementRepository.findById(announcement.getId())
+    public void delete(Long id) {
+        Announcement existing = announcementRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("announcement not found!"));
         announcementRepository.delete(existing);
     }
