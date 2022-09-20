@@ -14,4 +14,5 @@ public class RegisterUserRequest {
     private String interests;
     private String expertises;
     private String profileUrl;
+    private String role;
 }

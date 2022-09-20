@@ -1,6 +1,7 @@
 package com.gucardev.trakyabilmuhbe.controller;
 
 import com.gucardev.trakyabilmuhbe.dto.UserDto;
+import com.gucardev.trakyabilmuhbe.model.Role;
 import com.gucardev.trakyabilmuhbe.model.User;
 import com.gucardev.trakyabilmuhbe.request.RegisterUserRequest;
 import com.gucardev.trakyabilmuhbe.request.UpdateUserRequest;
@@ -47,5 +48,14 @@ public class UserController {
         return ResponseEntity.ok(modelMapper.map(userService.update(user), UserDto.class));
     }
 
+    @PatchMapping("/approve/{username}")
+    public ResponseEntity changeApprovedStatus(@PathVariable String username, Boolean approved) {
+        return ResponseEntity.ok(modelMapper.map(userService.setApproved(username, approved), UserDto.class));
+    }
+
+    @PatchMapping("/role/{username}")
+    public ResponseEntity updateRole(@PathVariable String username, @RequestBody Role role) {
+        return ResponseEntity.ok(modelMapper.map(userService.updateUserRole(username, role), UserDto.class));
+    }
 
 }

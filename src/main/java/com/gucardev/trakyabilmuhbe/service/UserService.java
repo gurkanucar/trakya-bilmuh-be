@@ -1,5 +1,6 @@
 package com.gucardev.trakyabilmuhbe.service;
 
+import com.gucardev.trakyabilmuhbe.model.Role;
 import com.gucardev.trakyabilmuhbe.model.User;
 import com.gucardev.trakyabilmuhbe.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -47,11 +48,18 @@ public class UserService {
     }
 
 
-    public User setApproved(User user, boolean approved) {
-        User existing = userRepository.findById(user.getId())
+    public User setApproved(String username, boolean approved) {
+        User existing = userRepository.findUserByUsername(username)
                 .orElseThrow(() -> new RuntimeException("user not found!"));
         existing.setApproved(approved);
-        return userRepository.save(user);
+        return userRepository.save(existing);
+    }
+
+    public User updateUserRole(String username, Role role) {
+        User existing = userRepository.findUserByUsername(username)
+                .orElseThrow(() -> new RuntimeException("user not found!"));
+        existing.setRole(role);
+        return userRepository.save(existing);
     }
 
     public List<User> getUsers() {
