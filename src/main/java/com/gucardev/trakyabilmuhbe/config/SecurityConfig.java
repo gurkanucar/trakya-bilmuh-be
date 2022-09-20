@@ -33,11 +33,12 @@ public class SecurityConfig {
         return http
                 .headers().frameOptions().disable().and()
                 .csrf().disable()
-                .authorizeRequests(
-                        (auth) -> {
-                            auth.anyRequest().authenticated();
-                        })
-                .formLogin().and().httpBasic().disable()
+                .authorizeRequests(auth -> {
+                    auth.antMatchers("/api/user/approve/**","/api/user/role/**").hasAuthority("ADMIN");
+                    auth.anyRequest().authenticated();
+                })
+                .formLogin().disable()
+                .httpBasic().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
