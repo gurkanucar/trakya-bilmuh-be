@@ -1,9 +1,11 @@
 package com.gucardev.trakyabilmuhbe.service;
 
 import com.gucardev.trakyabilmuhbe.dto.TokenResponseDto;
+import com.gucardev.trakyabilmuhbe.dto.UserDto;
 import com.gucardev.trakyabilmuhbe.exception.UsernameOrPasswordInvalidException;
 import com.gucardev.trakyabilmuhbe.request.LoginRequest;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +17,9 @@ public class AuthService {
 
     private final AuthenticationManager authenticationManager;
     private final UserDetailsServiceImpl userDetailsService;
+    private final UserService userService;
     private final TokenService tokenService;
+    private final ModelMapper modelMapper;
 
     public TokenResponseDto login(LoginRequest loginRequest) {
         try {
@@ -27,6 +31,9 @@ public class AuthService {
         }
         UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUsername());
         TokenResponseDto responseDto = new TokenResponseDto();
+        responseDto.setUserDto(modelMapper
+                .map(userService
+                        .findUserByUsername(userDetails.getUsername()), UserDto.class));
         responseDto.setAccessToken(tokenService.generateToken(userDetails));
         return responseDto;
     }
