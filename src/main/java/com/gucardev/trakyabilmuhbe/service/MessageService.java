@@ -1,5 +1,6 @@
 package com.gucardev.trakyabilmuhbe.service;
 
+import com.gucardev.trakyabilmuhbe.model.NotificationMessage;
 import com.gucardev.trakyabilmuhbe.model.notification.Message;
 import com.gucardev.trakyabilmuhbe.model.notification.MessageType;
 import com.gucardev.trakyabilmuhbe.repository.MessageRepository;
@@ -14,6 +15,7 @@ public class MessageService {
 
     private final MessageRepository messageRepository;
     private final UserService userService;
+    private final NotificationService notificationService;
 
     public Message create(Message message) {
         var user = userService.findUserByID(message.getUser().getId());
@@ -22,6 +24,9 @@ public class MessageService {
         } else if (!user.get().isApproved()) {
             throw new RuntimeException("user not approved! Please contact with admin");
         }
+        notificationService.sendNotification(NotificationMessage.builder()
+                .title(message.getMessageType().toString())
+                .content(message.getContent()).build());
         return messageRepository.save(message);
     }
 
@@ -36,7 +41,7 @@ public class MessageService {
 
     public Message getById(Long id) {
         return messageRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("not found!"));
+                .orElseThrow(() -> new RuntimeException("not found!"));
     }
 
     public void delete(Long id) {

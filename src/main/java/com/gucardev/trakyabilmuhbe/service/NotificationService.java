@@ -15,8 +15,7 @@ public class NotificationService {
     private final FirebaseMessaging firebaseMessaging;
 
 
-    public String sendNotification(NotificationMessage notificationMessage) throws FirebaseMessagingException {
-
+    public String sendNotification(NotificationMessage notificationMessage) {
         Notification notification = Notification
                 .builder()
                 .setTitle(notificationMessage.getTitle())
@@ -30,7 +29,11 @@ public class NotificationService {
                // .setToken("emvFWFA0QXG1OAtwIckW6W:APA91bF85ziTTBpL2vQGghsuynutlA0oRbv7qLYGP_8K5DyjhnoyW416E9PysoAIRkA83GiBrN3YIYoqc1GKUWaH7BmeL7WaAeCoXsoMAD_u1m7bnHZyxGWms4P14xArTbtOfevSn3Xk")
                 .build();
 
-        return firebaseMessaging.send(message);
+        try {
+            return firebaseMessaging.send(message);
+        } catch (FirebaseMessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

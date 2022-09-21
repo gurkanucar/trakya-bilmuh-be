@@ -1,6 +1,7 @@
 package com.gucardev.trakyabilmuhbe.service;
 
 import com.gucardev.trakyabilmuhbe.model.Announcement;
+import com.gucardev.trakyabilmuhbe.model.NotificationMessage;
 import com.gucardev.trakyabilmuhbe.repository.AnnouncementRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,13 @@ import java.util.List;
 public class AnnouncementService {
 
     private final AnnouncementRepository announcementRepository;
+    private final NotificationService notificationService;
 
 
     public Announcement create(Announcement announcement) {
+        notificationService.sendNotification(NotificationMessage.builder()
+                .title(announcement.getTitle())
+                .content(announcement.getContent()).build());
         return announcementRepository.save(announcement);
     }
 

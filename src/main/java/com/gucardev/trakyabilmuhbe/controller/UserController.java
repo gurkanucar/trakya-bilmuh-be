@@ -2,12 +2,10 @@ package com.gucardev.trakyabilmuhbe.controller;
 
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.gucardev.trakyabilmuhbe.dto.UserDto;
-import com.gucardev.trakyabilmuhbe.model.NotificationMessage;
 import com.gucardev.trakyabilmuhbe.model.Role;
 import com.gucardev.trakyabilmuhbe.model.User;
 import com.gucardev.trakyabilmuhbe.request.RegisterUserRequest;
 import com.gucardev.trakyabilmuhbe.request.UpdateUserRequest;
-import com.gucardev.trakyabilmuhbe.service.NotificationService;
 import com.gucardev.trakyabilmuhbe.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -21,9 +19,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
 public class UserController {
-
-    private final NotificationService notificationService;
-
     private final UserService userService;
     private final ModelMapper modelMapper;
 
@@ -36,7 +31,6 @@ public class UserController {
 
     @GetMapping("/all")
     public ResponseEntity<List<UserDto>> getAll() throws FirebaseMessagingException {
-        notificationService.sendNotification(NotificationMessage.builder().content("test").title("Trakya Bilmuhhh!").build());
         return ResponseEntity.ok(userService.getUsers().stream()
                 .map(x -> modelMapper.map(x, UserDto.class))
                 .collect(Collectors.toList()));
