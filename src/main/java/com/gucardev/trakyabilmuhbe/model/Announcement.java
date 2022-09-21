@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 @Data
 public class Announcement extends BaseEntity {
 
+    private String title;
     private String content;
     private String link;
 

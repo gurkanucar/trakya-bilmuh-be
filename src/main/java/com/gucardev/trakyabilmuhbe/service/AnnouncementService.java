@@ -25,6 +25,7 @@ public class AnnouncementService {
                 .orElseThrow(() -> new RuntimeException("announcement not found!"));
         existing.setContent(announcement.getContent());
         existing.setLink(announcement.getLink());
+        existing.setTitle(announcement.getTitle());
         existing.setUpdatedDateTime(LocalDateTime.now());
         return announcementRepository.save(existing);
     }

@@ -6,4 +6,5 @@ import lombok.Data;
 public class AnnouncementDto {
     private String content;
     private String link;
+    private String title;
 }
