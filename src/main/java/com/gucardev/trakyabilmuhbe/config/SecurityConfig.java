@@ -4,6 +4,7 @@ import com.gucardev.trakyabilmuhbe.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,7 +35,7 @@ public class SecurityConfig {
                 .headers().frameOptions().disable().and()
                 .csrf().disable()
                 .authorizeRequests(auth -> {
-                    auth.antMatchers("/api/user/approve/**","/api/user/role/**").hasAuthority("ADMIN");
+                    auth.antMatchers("/api/user/approve/**", "/api/user/role/**").hasAuthority("ADMIN");
                     auth.anyRequest().authenticated();
                 })
                 .formLogin().disable()
@@ -47,7 +48,8 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/api/public", "/h2-console/**", "/api/auth/login");
+        return (web) -> web.ignoring().antMatchers("/api/public", "/h2-console/**", "/api/auth/login")
+                .antMatchers(HttpMethod.GET, "/api/announcement/**", "/api/message/**");
     }
 
     @Bean
