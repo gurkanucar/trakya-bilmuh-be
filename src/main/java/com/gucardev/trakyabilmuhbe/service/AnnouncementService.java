@@ -39,4 +39,9 @@ public class AnnouncementService {
     public List<Announcement> getAll() {
         return announcementRepository.findAll();
     }
+
+    public Announcement getById(Long id) {
+        return announcementRepository.findById(id)
+                .orElseThrow(()->new RuntimeException("not found!"));
+    }
 }

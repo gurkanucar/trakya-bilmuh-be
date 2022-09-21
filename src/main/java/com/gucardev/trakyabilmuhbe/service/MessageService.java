@@ -34,6 +34,11 @@ public class MessageService {
         return messageRepository.save(existing);
     }
 
+    public Message getById(Long id) {
+        return messageRepository.findById(id)
+                .orElseThrow(()->new RuntimeException("not found!"));
+    }
+
     public void delete(Long id) {
         Message existing = messageRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("message not found!"));

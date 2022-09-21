@@ -22,6 +22,12 @@ public class MessageController {
     private final ModelMapper modelMapper;
 
 
+    @GetMapping("/{id}")
+    public ResponseEntity<MessageDto> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(modelMapper.map(messageService.getById(id), MessageDto.class));
+    }
+
+
     @GetMapping
     public ResponseEntity<List<MessageDto>> getMessages(@RequestParam(required = false) MessageType type) {
         return ResponseEntity.ok(messageService.getMessages(type).stream()
@@ -31,13 +37,13 @@ public class MessageController {
 
     @PostMapping
     public ResponseEntity<MessageDto> create(@RequestBody MessageRequest messageRequest) {
-        var message = modelMapper.map(messageRequest,Message.class);
+        var message = modelMapper.map(messageRequest, Message.class);
         return ResponseEntity.ok(modelMapper.map(messageService.create(message), MessageDto.class));
     }
 
     @PutMapping
     public ResponseEntity<MessageDto> update(@RequestBody MessageRequest messageRequest) {
-        var message = modelMapper.map(messageRequest,Message.class);
+        var message = modelMapper.map(messageRequest, Message.class);
         return ResponseEntity.ok(modelMapper.map(messageService.update(message), MessageDto.class));
     }
 
