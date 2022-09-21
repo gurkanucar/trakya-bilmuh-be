@@ -34,6 +34,7 @@ public class SecurityConfig {
         return http
                 .headers().frameOptions().disable().and()
                 .csrf().disable()
+                .cors().and()
                 .authorizeRequests(auth -> {
                     auth.antMatchers("/api/user/approve/**", "/api/user/role/**").hasAuthority("ADMIN");
                     auth.anyRequest().authenticated();
