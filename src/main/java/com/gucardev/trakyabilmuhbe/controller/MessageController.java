@@ -3,6 +3,7 @@ package com.gucardev.trakyabilmuhbe.controller;
 import com.gucardev.trakyabilmuhbe.dto.MessageDto;
 import com.gucardev.trakyabilmuhbe.model.notification.Message;
 import com.gucardev.trakyabilmuhbe.model.notification.MessageType;
+import com.gucardev.trakyabilmuhbe.request.MessageRequest;
 import com.gucardev.trakyabilmuhbe.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -29,12 +30,14 @@ public class MessageController {
     }
 
     @PostMapping
-    public ResponseEntity<MessageDto> create(Message message) {
+    public ResponseEntity<MessageDto> create(@RequestBody MessageRequest messageRequest) {
+        var message = modelMapper.map(messageRequest,Message.class);
         return ResponseEntity.ok(modelMapper.map(messageService.create(message), MessageDto.class));
     }
 
     @PutMapping
-    public ResponseEntity<MessageDto> update(Message message) {
+    public ResponseEntity<MessageDto> update(@RequestBody MessageRequest messageRequest) {
+        var message = modelMapper.map(messageRequest,Message.class);
         return ResponseEntity.ok(modelMapper.map(messageService.update(message), MessageDto.class));
     }
 
