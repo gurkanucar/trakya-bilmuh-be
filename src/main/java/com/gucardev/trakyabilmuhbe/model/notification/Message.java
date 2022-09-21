@@ -19,5 +19,6 @@ public class Message extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private MessageType messageType;
     private String content;
+    private String link;
 
 }

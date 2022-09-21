@@ -29,6 +29,8 @@ public class MessageService {
         Message existing = messageRepository.findById(message.getId())
                 .orElseThrow(() -> new RuntimeException("message not found!"));
         existing.setContent(message.getContent());
+        existing.setLink(message.getLink());
+        existing.setMessageType(message.getMessageType());
         return messageRepository.save(existing);
     }
 

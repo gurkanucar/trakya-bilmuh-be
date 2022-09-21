@@ -8,4 +8,5 @@ public class MessageDto {
     private UserDto user;
     private MessageType messageType;
     private String content;
+    private String link;
 }
