@@ -1,6 +1,7 @@
 package com.gucardev.trakyabilmuhbe.service;
 
 import com.gucardev.trakyabilmuhbe.dto.TokenResponseDto;
+import com.gucardev.trakyabilmuhbe.exception.UsernameOrPasswordInvalidException;
 import com.gucardev.trakyabilmuhbe.request.LoginRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,7 +23,7 @@ public class AuthService {
                     new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
             );
         } catch (Exception e) {
-            throw new RuntimeException("Invalid username or password!");
+            throw new UsernameOrPasswordInvalidException("Invalid username or password!");
         }
         UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUsername());
         TokenResponseDto responseDto = new TokenResponseDto();
