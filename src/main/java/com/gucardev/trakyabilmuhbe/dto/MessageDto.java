@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class MessageDto {
+    private Long id;
     private UserDto user;
     private MessageType messageType;
     private String content;
