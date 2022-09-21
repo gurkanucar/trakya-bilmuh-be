@@ -9,6 +9,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/api/announcement")
 @RequiredArgsConstructor
@@ -16,6 +19,14 @@ public class AnnouncementController {
 
     private final AnnouncementService announcementService;
     private final ModelMapper modelMapper;
+
+
+    @GetMapping
+    public ResponseEntity<List<AnnouncementDto>> getAnnouncements() {
+        return ResponseEntity.ok(announcementService.getAll().stream()
+                .map(x -> modelMapper.map(x, AnnouncementDto.class))
+                .collect(Collectors.toList()));
+    }
 
     @PostMapping
     public ResponseEntity<AnnouncementDto> create(@RequestBody Announcement announcement) {

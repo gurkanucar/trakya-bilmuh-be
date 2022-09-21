@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,4 +35,7 @@ public class AnnouncementService {
         announcementRepository.delete(existing);
     }
 
+    public List<Announcement> getAll() {
+        return announcementRepository.findAll();
+    }
 }
