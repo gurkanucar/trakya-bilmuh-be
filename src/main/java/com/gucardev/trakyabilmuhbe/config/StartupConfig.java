@@ -19,6 +19,9 @@ public class StartupConfig implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         log.debug("user is creating!");
-        userService.create(User.builder().name("Gurkan").role(Role.ADMIN).password("pass").mail("gurkanucar@trakya.edu.tr").username("gurkan").build());
+        userService.create(User.builder().name("Gurkan").role(Role.ADMIN)
+                .password("pass")
+                .mail("gurkanucar@trakya.edu.tr")
+                .approved(true).username("gurkan").build());
     }
 }
