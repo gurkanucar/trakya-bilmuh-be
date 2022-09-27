@@ -19,4 +19,5 @@ public class MessageRequest {
     @NotEmpty
     private String content;
     private String link;
+    private Long id;
 }
