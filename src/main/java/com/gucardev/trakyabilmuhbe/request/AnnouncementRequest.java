@@ -16,4 +16,5 @@ public class AnnouncementRequest {
     @NotNull
     @NotEmpty
     private String link;
+    private Long id;
 }
