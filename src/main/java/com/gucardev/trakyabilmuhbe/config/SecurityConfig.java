@@ -1,12 +1,14 @@
 package com.gucardev.trakyabilmuhbe.config;
 
+import com.gucardev.trakyabilmuhbe.security.JWTAccessDeniedHandler;
+import com.gucardev.trakyabilmuhbe.security.JwtAuthenticationEntryPoint;
 import com.gucardev.trakyabilmuhbe.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -16,18 +18,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@EnableWebSecurity
 @Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
+    private final JwtAuthenticationEntryPoint authenticationEntryPoint;
+    private final JWTAccessDeniedHandler accessDeniedHandler;
 
     @Bean
     public AuthenticationManager authenticationManager(final AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -36,11 +40,15 @@ public class SecurityConfig {
                 .csrf().disable()
                 .cors().and()
                 .authorizeRequests(auth -> {
-                    auth.antMatchers("/api/user/approve/**", "/api/user/role/**").hasAuthority("ADMIN");
+                    auth.antMatchers("/api/admin").hasAuthority("ADMIN");
+                    auth.antMatchers("/api/user").hasAnyAuthority("ADMIN", "USER");
                     auth.anyRequest().authenticated();
                 })
                 .formLogin().disable()
                 .httpBasic().disable()
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler)
+                .authenticationEntryPoint(authenticationEntryPoint)
+                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -49,8 +57,7 @@ public class SecurityConfig {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().antMatchers("/api/public", "/h2-console/**", "/api/auth/login")
-                .antMatchers(HttpMethod.GET, "/api/announcement/**", "/api/message/**");
+        return (web) -> web.ignoring().antMatchers("/api/public", "/h2-console/**", "/api/auth/login");
     }
 
     @Bean
@@ -63,5 +70,4 @@ public class SecurityConfig {
             }
         };
     }
-
 }
