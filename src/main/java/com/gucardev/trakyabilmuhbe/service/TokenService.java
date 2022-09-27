@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +25,14 @@ public class TokenService {
     @Value("${jwt-variables.EXPIRES_ACCESS_TOKEN_MINUTE}")
     private Integer EXPIRES_ACCESS_TOKEN_MINUTE;
 
-    public String generateToken(UserDetails userDetails) {
+
+    public String generateToken(Authentication auth) {
+        String username = ((UserDetails) auth.getPrincipal()).getUsername();
         return JWT.create()
-                .withSubject(userDetails.getUsername())
+                .withSubject(username)
                 .withExpiresAt(new Date(System.currentTimeMillis() + (EXPIRES_ACCESS_TOKEN_MINUTE * 60 * 1000)))
                 .withIssuer(ISSUER)
-                .sign(Algorithm.HMAC256(KEY.getBytes(StandardCharsets.UTF_8)));
+                .sign(Algorithm.HMAC256(KEY.getBytes()));
     }
 
     public DecodedJWT verifyJWT(String token) {
