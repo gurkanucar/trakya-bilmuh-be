@@ -32,7 +32,7 @@ public class AuthService {
             return TokenResponseDto
                     .builder()
                     .accessToken(tokenService.generateToken(auth))
-                    .user(modelMapper.map(getAuthenticatedUser(), UserDto.class))
+                    .user(modelMapper.map(userService.findUserByUsername(loginRequest.getUsername()), UserDto.class))
                     .build();
         } catch (final BadCredentialsException badCredentialsException) {
             throw new GeneralException("Invalid Username or Password", HttpStatus.BAD_REQUEST);
