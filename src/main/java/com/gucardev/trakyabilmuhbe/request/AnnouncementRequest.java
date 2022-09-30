@@ -13,8 +13,6 @@ public class AnnouncementRequest {
     @NotNull
     @NotEmpty
     private String content;
-    @NotNull
-    @NotEmpty
     private String link;
     private Long id;
 }
