@@ -33,7 +33,7 @@ public class BeanConfig {
                 .builder()
                 .setCredentials(googleCredentials)
                 .build();
-        FirebaseApp app = FirebaseApp.initializeApp(firebaseOptions, "trakya-bilmuh");
+        FirebaseApp app = FirebaseApp.initializeApp(firebaseOptions, "trakya-bilmuh-app");
         return FirebaseMessaging.getInstance(app);
     }
 }
