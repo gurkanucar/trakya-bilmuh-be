@@ -15,13 +15,9 @@ import java.util.List;
 public class AnnouncementService {
 
     private final AnnouncementRepository announcementRepository;
-    private final NotificationService notificationService;
 
 
     public Announcement create(Announcement announcement) {
-        notificationService.sendNotification(NotificationMessage.builder()
-                .title(announcement.getTitle())
-                .content(announcement.getContent()).build());
         return announcementRepository.save(announcement);
     }
 
@@ -47,6 +43,6 @@ public class AnnouncementService {
 
     public Announcement getById(Long id) {
         return announcementRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("not found!"));
+                .orElseThrow(() -> new RuntimeException("not found!"));
     }
 }
