@@ -30,20 +30,20 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<UserDto>> getAll() throws FirebaseMessagingException {
+    public ResponseEntity<List<UserDto>> getAll()  {
         return ResponseEntity.ok(userService.getUsers().stream()
                 .map(x -> modelMapper.map(x, UserDto.class))
                 .collect(Collectors.toList()));
     }
 
     @PostMapping
-    public ResponseEntity register(@RequestBody RegisterUserRequest registerUserRequest) {
+    public ResponseEntity<UserDto> register(@RequestBody RegisterUserRequest registerUserRequest) {
         User user = modelMapper.map(registerUserRequest, User.class);
         return ResponseEntity.ok(modelMapper.map(userService.create(user), UserDto.class));
     }
 
     @PutMapping
-    public ResponseEntity update(@RequestBody UpdateUserRequest updateUserRequest) {
+    public ResponseEntity<UserDto> update(@RequestBody UpdateUserRequest updateUserRequest) {
         User user = modelMapper.map(updateUserRequest, User.class);
         return ResponseEntity.ok(modelMapper.map(userService.update(user), UserDto.class));
     }
