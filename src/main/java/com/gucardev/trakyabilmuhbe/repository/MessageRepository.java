@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Long> {
 
-    List<Message> findAllByMessageType(MessageType type);
+    List<Message> findAllByMessageTypeOrderByCreatedDateTimeDesc(MessageType type);
 
 }

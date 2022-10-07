@@ -57,6 +57,6 @@ public class MessageService {
         if (type == null) {
             return messageRepository.findAll();
         }
-        return messageRepository.findAllByMessageType(type);
+        return messageRepository.findAllByMessageTypeOrderByCreatedDateTimeDesc(type);
     }
 }
