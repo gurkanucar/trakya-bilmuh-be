@@ -26,23 +26,25 @@ public class StartupConfig implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         log.debug("user is creating!");
-        User admin = userService.create(User.builder().name("Gurkan").surname("Ucar").role(Role.ADMIN)
+        User admin = userService.create(User.builder().name("Gurkan").surname("UCAR").role(Role.ADMIN)
                 .password("pass")
                 .mail("gurkanucar@traky@.edu.tr")
                 .approved(true).username("gurkan").build());
-        User eo = userService.create(User.builder().name("E").surname("O").role(Role.ACADEMICIAN)
+        User user1 = userService.create(User.builder().name("Ahmet").surname("MEHMET").role(Role.ACADEMICIAN)
                 .password("pass")
-                .mail("eo@traky@.edu.tr")
-                .approved(true).username("emr").build());
-        User ct = userService.create(User.builder().name("C").surname("T").role(Role.ACADEMICIAN)
+                .mail("amehmet@traky@.edu.tr")
+                .approved(true).username("amehmet").build());
+        User user2 = userService.create(User.builder().name("Mehmet").surname("YILMAZ").role(Role.ACADEMICIAN)
                 .password("pass")
-                .mail("ct@traky@.edu.tr")
-                .approved(true).username("cm").build());
+                .mail("my@traky@.edu.tr")
+                .approved(true).username("myilmaz").build());
 
 
-        messageService.create(Message.builder().user(ct).messageType(MessageType.INTERNSHIP).content("bmd is").link("https://www.javatpoint.com/spring-boot-aop-before-advice").build());
-        messageService.create(Message.builder().user(ct).messageType(MessageType.FOURTH_GRADE).content("mobil iptal").build());
-        messageService.create(Message.builder().user(eo).messageType(MessageType.JOB).content("mg is").link("https://github.com/gurkanucar").build());
+        messageService.create(Message.builder().user(user2).messageType(MessageType.INTERNSHIP).content("XYZ firmasinda staj firsati!").link("https://www.javatpoint.com/spring-boot-aop-before-advice").build());
+        messageService.create(Message.builder().user(user2).messageType(MessageType.FOURTH_GRADE).content("xyz dersi iptal").build());
+        messageService.create(Message.builder().user(user1).messageType(MessageType.JOB).content("XYZ firmasinda parttime olarak is firsati").link("https://github.com/gurkanucar").build());
+        messageService.create(Message.builder().user(admin).messageType(MessageType.THIRD_GRADE).content("OOP Dersi icin github linki").link("https://github.com/gurkanucar").build());
+        messageService.create(Message.builder().user(user1).messageType(MessageType.FOURTH_GRADE).content("Proje grubumdakiler pazartesi saat 3 te yanima gelsin").link("").build());
 
         announcementService.create(Announcement.builder().title("BİL413 İŞ SAĞLIĞI VE GÜVENLİĞİ I Hk.").link("https://bilmuh.trakya.edu.tr/news/bil413-is-sagligi-ve-guvenligi-i-hk").content("Mühendislik Fakültesi BİL413 İŞ SAĞLIĞI VE GÜVENLİĞİ I adlı ders fakülte ortak ders kapsamında online olarak gerçekleştirilecektir. Bu nedenle bu dersi alan Bilgisayar Mühendisliği bölüm öğrencileri de TEAMS'de MUH002_ELEKTRİK-ELEKTRONİK MÜHENDİSLİĞİ_3 adlı ekipte derslerini ve sınavlarını takip edeceklerdir.").build());
         announcementService.create(Announcement.builder().title("Matematik I dersi hakkında").link("https://bilmuh.trakya.edu.tr/news/matematik-i-dersi-hakkinda").content("Bilgisayar Mühendisliği Matematik I dersi Matematik Bölümünde yapılacaktır.").build());
