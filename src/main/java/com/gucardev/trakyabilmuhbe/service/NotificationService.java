@@ -18,7 +18,7 @@ public class NotificationService {
 
 
     public void sendNotification(NotificationMessage notificationMessage) {
-      /*  Notification notification = Notification
+        Notification notification = Notification
                 .builder()
                 .setTitle(notificationMessage.getTitle())
                 .setBody(notificationMessage.getContent())
@@ -28,14 +28,13 @@ public class NotificationService {
                 .builder()
                 .setNotification(notification)
                 .setTopic("/topics/all")
-               // .setToken("emvFWFA0QXG1OAtwIckW6W:APA91bF85ziTTBpL2vQGghsuynutlA0oRbv7qLYGP_8K5DyjhnoyW416E9PysoAIRkA83GiBrN3YIYoqc1GKUWaH7BmeL7WaAeCoXsoMAD_u1m7bnHZyxGWms4P14xArTbtOfevSn3Xk")
                 .build();
 
         try {
-            return firebaseMessaging.send(message);
-        } catch (FirebaseMessagingException e) {
+            firebaseMessaging.send(message);
+        } catch (Exception e) {
             throw new RuntimeException(e);
-        }*/
+        }
         log.info("notification sent!");
     }
 
