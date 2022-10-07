@@ -46,4 +46,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(PermissionError.class)
+    public ResponseEntity<?> permissionError(PermissionError exception) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("error", exception.getMessage());
+        return new ResponseEntity<>(errors, HttpStatus.METHOD_NOT_ALLOWED);
+    }
 }

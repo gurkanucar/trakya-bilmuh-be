@@ -1,5 +1,6 @@
 package com.gucardev.trakyabilmuhbe.service;
 
+import com.gucardev.trakyabilmuhbe.exception.PermissionError;
 import com.gucardev.trakyabilmuhbe.model.notification.Message;
 import com.gucardev.trakyabilmuhbe.model.notification.MessageType;
 import com.gucardev.trakyabilmuhbe.repository.MessageRepository;
@@ -14,6 +15,7 @@ public class MessageService {
 
     private final MessageRepository messageRepository;
     private final UserService userService;
+    private final AuthService authService;
 
     public Message create(Message message) {
         var user = userService.findUserByID(message.getUser().getId());
@@ -28,6 +30,9 @@ public class MessageService {
     public Message update(Message message) {
         Message existing = messageRepository.findById(message.getId())
                 .orElseThrow(() -> new RuntimeException("message not found!"));
+        if (!authService.checkForPermission(existing.getUser().getId())) {
+            throw new PermissionError("Permission not granted!");
+        }
         existing.setContent(message.getContent());
         existing.setLink(message.getLink());
         existing.setMessageType(message.getMessageType());
@@ -42,6 +47,9 @@ public class MessageService {
     public void delete(Long id) {
         Message existing = messageRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("message not found!"));
+        if (!authService.checkForPermission(existing.getUser().getId())) {
+            throw new PermissionError("Permission not granted!");
+        }
         messageRepository.delete(existing);
     }
 

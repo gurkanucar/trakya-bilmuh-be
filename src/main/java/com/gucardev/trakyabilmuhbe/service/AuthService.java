@@ -45,4 +45,8 @@ public class AuthService {
         return userService.findUserByUsername(username);
     }
 
+    public boolean checkForPermission(Long id) {
+        return getAuthenticatedUser().getId().equals(id);
+    }
+
 }
