@@ -63,7 +63,7 @@ public class MessageService {
 
     public List<Message> getMessages(Channel channel) {
         if (channel == null) {
-            return messageRepository.findAll();
+            return messageRepository.findAllByOrderByCreatedDateTimeDesc();
         }
         return messageRepository.findAllByChannelOrderByCreatedDateTimeDesc(channel);
     }
