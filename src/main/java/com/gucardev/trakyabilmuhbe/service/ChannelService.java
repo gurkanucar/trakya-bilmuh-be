@@ -35,7 +35,7 @@ public class ChannelService {
 
         // TODO generate channelTopic automatically
         String channelTopic = codeGenerator.generateRandomString();
-
+        log.info(channelRequest.toString());
         Channel channel = Channel.builder()
                 .channelTopic(channelTopic)
                 .canSendOthers(channelRequest.isCanSendOthers())
@@ -48,8 +48,9 @@ public class ChannelService {
 
     public Channel update(ChannelRequest channelRequest) {
         Channel channel = getByID(channelRequest.getId());
-        channel.setChannelName(channel.getChannelName());
-        channel.setChannelImageUrl(channel.getChannelImageUrl());
+        channel.setChannelName(channelRequest.getChannelName());
+        channel.setChannelImageUrl(channelRequest.getChannelImageUrl());
+        channel.setCanSendOthers(channel.isCanSendOthers());
         return channelRepository.save(channel);
     }
 
