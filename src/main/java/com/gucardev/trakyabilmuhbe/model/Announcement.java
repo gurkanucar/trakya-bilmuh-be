@@ -20,4 +20,6 @@ public class Announcement extends BaseEntity {
     private String content;
     private String link;
 
+    private String topic;
+
 }

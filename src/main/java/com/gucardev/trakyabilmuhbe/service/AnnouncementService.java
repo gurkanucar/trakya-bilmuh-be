@@ -4,6 +4,7 @@ import com.gucardev.trakyabilmuhbe.model.Announcement;
 import com.gucardev.trakyabilmuhbe.model.NotificationMessage;
 import com.gucardev.trakyabilmuhbe.repository.AnnouncementRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,10 +15,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AnnouncementService {
 
+    @Value("${announcementDefaultTopic}")
+    String topic;
+
     private final AnnouncementRepository announcementRepository;
 
 
     public Announcement create(Announcement announcement) {
+        announcement.setTopic(topic);
         return announcementRepository.save(announcement);
     }
 
