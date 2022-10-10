@@ -28,6 +28,14 @@ public class ChannelController {
                 .collect(Collectors.toList()));
     }
 
+    @GetMapping("/my-channels")
+    public ResponseEntity<List<ChannelDto>> getMyChannels() {
+        return ResponseEntity.ok(channelService.getMyChannels()
+                .stream()
+                .map(x -> modelMapper.map(x, ChannelDto.class))
+                .collect(Collectors.toList()));
+    }
+
     @PostMapping
     public ResponseEntity<ChannelDto> createChannel(ChannelRequest channelRequest) {
         return ResponseEntity.ok(modelMapper.map(channelService.create(channelRequest), ChannelDto.class));

@@ -25,6 +25,10 @@ public class ChannelService {
         return channelRepository.findAll();
     }
 
+    public List<Channel> getMyChannels() {
+        return channelRepository.findAllByUser(authService.getAuthenticatedUser());
+    }
+
     public Channel create(ChannelRequest channelRequest) {
 
         String channelTopic = "";
