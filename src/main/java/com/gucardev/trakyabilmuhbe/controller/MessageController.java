@@ -1,8 +1,8 @@
 package com.gucardev.trakyabilmuhbe.controller;
 
 import com.gucardev.trakyabilmuhbe.dto.MessageDto;
-import com.gucardev.trakyabilmuhbe.model.notification.Message;
-import com.gucardev.trakyabilmuhbe.model.notification.MessageType;
+import com.gucardev.trakyabilmuhbe.model.Channel;
+import com.gucardev.trakyabilmuhbe.model.Message;
 import com.gucardev.trakyabilmuhbe.request.MessageRequest;
 import com.gucardev.trakyabilmuhbe.service.MessageService;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +29,8 @@ public class MessageController {
 
 
     @GetMapping
-    public ResponseEntity<List<MessageDto>> getMessages(@RequestParam(required = false) MessageType type) {
-        return ResponseEntity.ok(messageService.getMessages(type).stream()
+    public ResponseEntity<List<MessageDto>> getMessages(@RequestParam(required = false) Channel channel) {
+        return ResponseEntity.ok(messageService.getMessages(channel).stream()
                 .map(x -> modelMapper.map(x, MessageDto.class))
                 .collect(Collectors.toList()));
     }

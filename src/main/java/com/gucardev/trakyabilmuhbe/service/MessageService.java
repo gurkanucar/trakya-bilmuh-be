@@ -1,8 +1,8 @@
 package com.gucardev.trakyabilmuhbe.service;
 
 import com.gucardev.trakyabilmuhbe.exception.PermissionError;
-import com.gucardev.trakyabilmuhbe.model.notification.Message;
-import com.gucardev.trakyabilmuhbe.model.notification.MessageType;
+import com.gucardev.trakyabilmuhbe.model.Channel;
+import com.gucardev.trakyabilmuhbe.model.Message;
 import com.gucardev.trakyabilmuhbe.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,6 @@ public class MessageService {
         }
         existing.setContent(message.getContent());
         existing.setLink(message.getLink());
-        existing.setMessageType(message.getMessageType());
         return messageRepository.save(existing);
     }
 
@@ -53,10 +52,10 @@ public class MessageService {
         messageRepository.delete(existing);
     }
 
-    public List<Message> getMessages(MessageType type) {
-        if (type == null) {
+    public List<Message> getMessages(Channel channel) {
+        if (channel == null) {
             return messageRepository.findAll();
         }
-        return messageRepository.findAllByMessageTypeOrderByCreatedDateTimeDesc(type);
+        return messageRepository.findAllByChannelOrderByCreatedDateTimeDesc(channel);
     }
 }
