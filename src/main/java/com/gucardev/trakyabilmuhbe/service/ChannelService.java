@@ -5,6 +5,7 @@ import com.gucardev.trakyabilmuhbe.exception.PermissionError;
 import com.gucardev.trakyabilmuhbe.model.Channel;
 import com.gucardev.trakyabilmuhbe.repository.ChannelRepository;
 import com.gucardev.trakyabilmuhbe.request.ChannelRequest;
+import com.gucardev.trakyabilmuhbe.util.CodeGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ public class ChannelService {
 
     private final ChannelRepository channelRepository;
     private final AuthService authService;
+    private final CodeGenerator codeGenerator;
 
 
     public List<Channel> getAllChannels() {
@@ -32,7 +34,7 @@ public class ChannelService {
     public Channel create(ChannelRequest channelRequest) {
 
         // TODO generate channelTopic automatically
-        String channelTopic = "";
+        String channelTopic = codeGenerator.generateRandomString();
 
         Channel channel = Channel.builder()
                 .channelTopic(channelTopic)
