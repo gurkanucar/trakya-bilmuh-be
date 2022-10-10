@@ -10,5 +10,6 @@ public class ChannelDto {
     private String channelName;
     private String channelTopic;
     private String channelImageUrl;
+    private boolean canSendOthers;
 
 }
