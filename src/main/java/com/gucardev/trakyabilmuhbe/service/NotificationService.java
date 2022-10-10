@@ -18,6 +18,13 @@ public class NotificationService {
 
 
     public void sendNotification(NotificationMessage notificationMessage) {
+        String topic = notificationMessage.getTopic();
+        if (topic == null || topic.isBlank()) {
+            topic = "/topics/all";
+        } else {
+            topic = "/topics/" + topic;
+        }
+
         Notification notification = Notification
                 .builder()
                 .setTitle(notificationMessage.getTitle())
@@ -27,7 +34,9 @@ public class NotificationService {
         Message message = Message
                 .builder()
                 .setNotification(notification)
-                .setTopic(notificationMessage.getTopic())
+                .setTopic(topic)
+                //.setToken("fufVQteARgO8ERqHL-9jk7:APA91bHu42_Kh7W2hrkVHrZyMUg5jayKXUEIrzCF7Kx9-ZiAsKoon3PV15jXCziqIo5zx0jgDyEUN4NzrBFjprFGHfcP-1ydVj5uNJra7ykAipf6LqVI07py8suYkRrUtLnxa0gXDXKi")
+                //.setTopic("/topics/all")
                 .build();
 
         try {
