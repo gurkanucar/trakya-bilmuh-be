@@ -47,11 +47,14 @@ public class ChannelService {
     }
 
     public Channel update(ChannelRequest channelRequest) {
-        Channel channel = getByID(channelRequest.getId());
-        channel.setChannelName(channelRequest.getChannelName());
-        channel.setChannelImageUrl(channelRequest.getChannelImageUrl());
-        channel.setCanSendOthers(channelRequest.isCanSendOthers());
-        return channelRepository.save(channel);
+        Channel existing = getByID(channelRequest.getId());
+        if (!authService.checkForPermission(existing.getUser().getId())) {
+            throw new PermissionError("Permission not granted!");
+        }
+        existing.setChannelName(channelRequest.getChannelName());
+        existing.setChannelImageUrl(channelRequest.getChannelImageUrl());
+        existing.setCanSendOthers(channelRequest.isCanSendOthers());
+        return channelRepository.save(existing);
     }
 
 
