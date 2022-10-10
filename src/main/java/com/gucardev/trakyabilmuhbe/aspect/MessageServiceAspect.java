@@ -1,7 +1,7 @@
 package com.gucardev.trakyabilmuhbe.aspect;
 
 import com.gucardev.trakyabilmuhbe.model.NotificationMessage;
-import com.gucardev.trakyabilmuhbe.model.notification.Message;
+import com.gucardev.trakyabilmuhbe.model.Message;
 import com.gucardev.trakyabilmuhbe.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ public class MessageServiceAspect {
     public void afterSaveAnnouncement(JoinPoint joinPoint, Message message) {
         log.info("message saved: " + message.getId().toString());
         notificationService.sendNotification(NotificationMessage.builder()
-                .title(message.getMessageType().toString())
+                .title(message.getChannel().getChannelName())
                 .content(message.getContent()).build());
     }
 
