@@ -1,6 +1,6 @@
 package com.gucardev.trakyabilmuhbe.dto;
 
-import com.gucardev.trakyabilmuhbe.model.notification.MessageType;
+import com.gucardev.trakyabilmuhbe.model.Channel;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public class MessageDto {
     private Long id;
     private UserDto user;
-    private MessageType messageType;
+    private Channel channel;
     private String content;
     private String link;
     private LocalDateTime createdDateTime;
