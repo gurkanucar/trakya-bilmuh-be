@@ -26,7 +26,7 @@ public class ChannelService {
     }
 
     public List<Channel> getMyChannels() {
-        return channelRepository.findAllByUser(authService.getAuthenticatedUser());
+        return channelRepository.findAllChannelsByUserOrCanSendOthers(authService.getAuthenticatedUser().getId());
     }
 
     public Channel create(ChannelRequest channelRequest) {
@@ -35,6 +35,7 @@ public class ChannelService {
 
         Channel channel = Channel.builder()
                 .channelTopic(channelTopic)
+                .canSendOthers(channelRequest.isCanSendOthers())
                 .channelName(channelRequest.getChannelName())
                 .user(channelRequest.getUser())
                 .channelImageUrl(channelRequest.getChannelImageUrl())
