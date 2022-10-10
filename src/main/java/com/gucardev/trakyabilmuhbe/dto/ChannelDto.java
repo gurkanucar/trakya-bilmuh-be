@@ -2,6 +2,8 @@ package com.gucardev.trakyabilmuhbe.dto;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class ChannelDto {
 
@@ -11,5 +13,6 @@ public class ChannelDto {
     private String channelTopic;
     private String channelImageUrl;
     private boolean canSendOthers;
-
+    private LocalDateTime createdDateTime;
+    private LocalDateTime updatedDateTime;
 }
