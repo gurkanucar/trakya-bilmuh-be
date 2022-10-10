@@ -31,6 +31,7 @@ public class ChannelService {
 
     public Channel create(ChannelRequest channelRequest) {
 
+        // TODO generate channelTopic automatically
         String channelTopic = "";
 
         Channel channel = Channel.builder()

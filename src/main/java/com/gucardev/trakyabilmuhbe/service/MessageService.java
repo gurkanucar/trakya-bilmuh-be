@@ -24,6 +24,12 @@ public class MessageService {
         } else if (!user.get().isApproved()) {
             throw new RuntimeException("user not approved! Please contact with admin");
         }
+
+        // TODO check for canSendOthers
+//        if (!message.getChannel().isCanSendOthers() && !authService.checkForPermission(message.getChannel().getUser().getId())) {
+//            throw new PermissionError("Permission not granted!");
+//        }
+
         return messageRepository.save(message);
     }
 
