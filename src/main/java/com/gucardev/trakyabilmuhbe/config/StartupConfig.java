@@ -3,9 +3,10 @@ package com.gucardev.trakyabilmuhbe.config;
 import com.gucardev.trakyabilmuhbe.model.Announcement;
 import com.gucardev.trakyabilmuhbe.model.Role;
 import com.gucardev.trakyabilmuhbe.model.User;
-import com.gucardev.trakyabilmuhbe.model.notification.Message;
-import com.gucardev.trakyabilmuhbe.model.notification.MessageType;
+import com.gucardev.trakyabilmuhbe.model.Message;
+import com.gucardev.trakyabilmuhbe.request.ChannelRequest;
 import com.gucardev.trakyabilmuhbe.service.AnnouncementService;
+import com.gucardev.trakyabilmuhbe.service.ChannelService;
 import com.gucardev.trakyabilmuhbe.service.MessageService;
 import com.gucardev.trakyabilmuhbe.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Component;
 public class StartupConfig implements CommandLineRunner {
 
     private final UserService userService;
+    private final ChannelService channelService;
     private final AnnouncementService announcementService;
     private final MessageService messageService;
 
@@ -40,11 +42,23 @@ public class StartupConfig implements CommandLineRunner {
                 .approved(true).username("myilmaz").build());
 
 
-        messageService.create(Message.builder().user(user2).messageType(MessageType.INTERNSHIP).content("XYZ firmasinda staj firsati!").link("https://www.javatpoint.com/spring-boot-aop-before-advice").build());
-        messageService.create(Message.builder().user(user2).messageType(MessageType.FOURTH_GRADE).content("xyz dersi iptal").build());
-        messageService.create(Message.builder().user(user1).messageType(MessageType.JOB).content("XYZ firmasinda parttime olarak is firsati").link("https://github.com/gurkanucar").build());
-        messageService.create(Message.builder().user(admin).messageType(MessageType.THIRD_GRADE).content("OOP Dersi icin github linki").link("https://github.com/gurkanucar").build());
-        messageService.create(Message.builder().user(user1).messageType(MessageType.FOURTH_GRADE).content("Proje grubumdakiler pazartesi saat 3 te yanima gelsin").link("").build());
+        var channelJava = channelService.create(ChannelRequest.builder().channelName("Ileri Java Dersi").user(admin).canSendOthers(false).build());
+        var channelStaj = channelService.create(ChannelRequest.builder().channelName("Staj kanali").user(user1).canSendOthers(true).build());
+        var channelIs = channelService.create(ChannelRequest.builder().channelName("Is Kanali").canSendOthers(true).user(user2).build());
+        var channelGorsel = channelService.create(ChannelRequest.builder().channelName("Gorsel Programlama Dersi").canSendOthers(false).user(admin).build());
+        var channelMobil = channelService.create(ChannelRequest.builder().channelName("Mobil Uygulama Dersi").canSendOthers(false).user(user2).build());
+        var channelVeriTabani = channelService.create(ChannelRequest.builder().channelName("Veri Tabani Dersi").canSendOthers(false).user(user2).build());
+
+
+        messageService.create(Message.builder().user(user1).channel(channelStaj).content("XYZ firmasinda staj firsati!").link("https://www.javatpoint.com/spring-boot-aop-before-advice").build());
+        messageService.create(Message.builder().user(user1).channel(channelStaj).content("Teknoparktaki ABC firmsi stajyer aramaktadir").link("https://www.javatpoint.com/spring-boot-aop-before-advice").build());
+        messageService.create(Message.builder().user(admin).channel(channelJava).content("java dersi iptal").build());
+        messageService.create(Message.builder().user(admin).channel(channelJava).content("Yarin javada nasil json parse edebilecegimizi gorecegiz. Lutfen linki inceleyin").link("kaynak").build());
+        messageService.create(Message.builder().user(admin).channel(channelJava).content("Yarin java swing kullanimini gorecegiz").build());
+        messageService.create(Message.builder().user(user2).channel(channelIs).content("XYZ firmasinda parttime olarak is firsati").link("https://github.com/gurkanucar").build());
+        messageService.create(Message.builder().user(admin).channel(channelGorsel).content("Gorsel Dersi icin github linki").link("https://github.com/gurkanucar").build());
+        messageService.create(Message.builder().user(user2).channel(channelMobil).content("Mobil dersi a ve b gruplari birlesti").link("").build());
+        messageService.create(Message.builder().user(user2).channel(channelVeriTabani).content("Veri tabani icin kaynkalar teams de paylasildi").link("").build());
 
         announcementService.create(Announcement.builder().title("BİL413 İŞ SAĞLIĞI VE GÜVENLİĞİ I Hk.").link("https://bilmuh.trakya.edu.tr/news/bil413-is-sagligi-ve-guvenligi-i-hk").content("Mühendislik Fakültesi BİL413 İŞ SAĞLIĞI VE GÜVENLİĞİ I adlı ders fakülte ortak ders kapsamında online olarak gerçekleştirilecektir. Bu nedenle bu dersi alan Bilgisayar Mühendisliği bölüm öğrencileri de TEAMS'de MUH002_ELEKTRİK-ELEKTRONİK MÜHENDİSLİĞİ_3 adlı ekipte derslerini ve sınavlarını takip edeceklerdir.").build());
         announcementService.create(Announcement.builder().title("Matematik I dersi hakkında").link("https://bilmuh.trakya.edu.tr/news/matematik-i-dersi-hakkinda").content("Bilgisayar Mühendisliği Matematik I dersi Matematik Bölümünde yapılacaktır.").build());
