@@ -16,6 +16,7 @@ public class MessageService {
     private final MessageRepository messageRepository;
     private final UserService userService;
     private final AuthService authService;
+    private final ChannelService channelService;
 
     public Message create(Message message) {
         var user = userService.findUserByID(message.getUser().getId());
@@ -39,6 +40,8 @@ public class MessageService {
         if (!authService.checkForPermission(existing.getUser().getId())) {
             throw new PermissionError("Permission not granted!");
         }
+        var channel = channelService.getByID(message.getChannel().getId());
+        existing.setChannel(channel);
         existing.setContent(message.getContent());
         existing.setLink(message.getLink());
         return messageRepository.save(existing);
