@@ -50,7 +50,7 @@ public class ChannelService {
         Channel channel = getByID(channelRequest.getId());
         channel.setChannelName(channelRequest.getChannelName());
         channel.setChannelImageUrl(channelRequest.getChannelImageUrl());
-        channel.setCanSendOthers(channel.isCanSendOthers());
+        channel.setCanSendOthers(channelRequest.isCanSendOthers());
         return channelRepository.save(channel);
     }
 
