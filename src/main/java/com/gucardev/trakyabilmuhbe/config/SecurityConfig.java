@@ -61,6 +61,7 @@ public class SecurityConfig {
                 "/h2-console/**",
                 "/api/auth/login",
                 "/api/announcement",
+                "/api/channel",
                 "/api/message");
     }
 
