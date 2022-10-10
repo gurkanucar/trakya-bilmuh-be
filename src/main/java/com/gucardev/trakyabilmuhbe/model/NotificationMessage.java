@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class NotificationMessage {
     private String content;
     private String title;
+    private String topic;
 }

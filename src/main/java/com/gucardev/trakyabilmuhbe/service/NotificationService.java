@@ -27,7 +27,7 @@ public class NotificationService {
         Message message = Message
                 .builder()
                 .setNotification(notification)
-                .setTopic("/topics/all")
+                .setTopic(notificationMessage.getTopic())
                 .build();
 
         try {
