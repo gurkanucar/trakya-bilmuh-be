@@ -37,12 +37,12 @@ public class ChannelController {
     }
 
     @PostMapping
-    public ResponseEntity<ChannelDto> createChannel(ChannelRequest channelRequest) {
+    public ResponseEntity<ChannelDto> createChannel(@RequestBody ChannelRequest channelRequest) {
         return ResponseEntity.ok(modelMapper.map(channelService.create(channelRequest), ChannelDto.class));
     }
 
     @PutMapping
-    public ResponseEntity<ChannelDto> updateChannel(ChannelRequest channelRequest) {
+    public ResponseEntity<ChannelDto> updateChannel(@RequestBody ChannelRequest channelRequest) {
         return ResponseEntity.ok(modelMapper.map(channelService.update(channelRequest), ChannelDto.class));
     }
 
