@@ -24,6 +24,7 @@ public class MessageServiceAspect {
         log.info("message saved: " + message.getId().toString());
         notificationService.sendNotification(NotificationMessage.builder()
                 .title(message.getChannel().getChannelName())
+                .topic(message.getChannel().getChannelTopic())
                 .content(message.getContent()).build());
     }
 
