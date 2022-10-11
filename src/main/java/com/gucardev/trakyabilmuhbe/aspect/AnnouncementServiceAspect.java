@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -17,21 +18,26 @@ import org.springframework.stereotype.Component;
 public class AnnouncementServiceAspect {
 
 
+    @Value("${announcementDefaultTopic}")
+    String topic;
+
     private final NotificationService notificationService;
 
     @After(value = "execution(* com.gucardev.trakyabilmuhbe.service.AnnouncementService.create(..)) && args(announcement)")
     public void afterSaveAnnouncement(JoinPoint joinPoint, Announcement announcement) {
         log.info("announcement saved: " + announcement.getId().toString());
-        notificationService.sendNotification(NotificationMessage.builder()
+       notificationService.sendNotification(NotificationMessage.builder()
                 .title(announcement.getTitle())
+                       .topic(topic)
                 .content(announcement.getContent()).build());
     }
 
     @After(value = "execution(* com.gucardev.trakyabilmuhbe.service.AnnouncementService.update(..)) && args(announcement)")
     public void afterUpdateAnnouncement(JoinPoint joinPoint, Announcement announcement) {
         log.info("announcement updated: " + announcement.getId().toString());
-        notificationService.sendNotification(NotificationMessage.builder()
+       notificationService.sendNotification(NotificationMessage.builder()
                 .title("UPDATE! " + announcement.getTitle())
+                       .topic(topic)
                 .content(announcement.getContent()).build());
     }
 
