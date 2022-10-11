@@ -51,14 +51,16 @@ public class StartupConfig implements CommandLineRunner {
 
 
         messageService.create(Message.builder().user(user1).channel(channelStaj).content("XYZ firmasinda staj firsati!").link("https://www.javatpoint.com/spring-boot-aop-before-advice").build());
-        messageService.create(Message.builder().user(user1).channel(channelStaj).content("Teknoparktaki ABC firmsi stajyer aramaktadir").link("https://www.javatpoint.com/spring-boot-aop-before-advice").build());
+        messageService.create(Message.builder().user(user2).channel(channelStaj).content("Teknoparktaki ABC firmsi stajyer aramaktadir").link("https://www.javatpoint.com/spring-boot-aop-before-advice").build());
+        messageService.create(Message.builder().user(user1).channel(channelStaj).content("ZXC firmasi yari zamanli stajyer aramaktadir.").link("https://www.javatpoint.com/spring-boot-aop-before-advice").build());
+        messageService.create(Message.builder().user(admin).channel(channelStaj).content("QWE Bank stajyer aliyor.").link("https://www.javatpoint.com/spring-boot-aop-before-advice").build());
         messageService.create(Message.builder().user(admin).channel(channelJava).content("java dersi iptal").build());
         messageService.create(Message.builder().user(admin).channel(channelJava).content("Yarin javada nasil json parse edebilecegimizi gorecegiz. Lutfen linki inceleyin").link("kaynak").build());
         messageService.create(Message.builder().user(admin).channel(channelJava).content("Yarin java swing kullanimini gorecegiz").build());
         messageService.create(Message.builder().user(user2).channel(channelIs).content("XYZ firmasinda parttime olarak is firsati").link("https://github.com/gurkanucar").build());
         messageService.create(Message.builder().user(admin).channel(channelGorsel).content("Gorsel Dersi icin github linki").link("https://github.com/gurkanucar").build());
-        messageService.create(Message.builder().user(user2).channel(channelMobil).content("Mobil dersi a ve b gruplari birlesti").link("").build());
-        messageService.create(Message.builder().user(user2).channel(channelVeriTabani).content("Veri tabani icin kaynkalar teams de paylasildi").link("").build());
+        messageService.create(Message.builder().user(user2).channel(channelMobil).content("Mobil dersi a ve b gruplari birlesti").build());
+        messageService.create(Message.builder().user(user2).channel(channelVeriTabani).content("Veri tabani icin kaynkalar teams de paylasildi").build());
 
         announcementService.create(Announcement.builder().title("BİL413 İŞ SAĞLIĞI VE GÜVENLİĞİ I Hk.").link("https://bilmuh.trakya.edu.tr/news/bil413-is-sagligi-ve-guvenligi-i-hk").content("Mühendislik Fakültesi BİL413 İŞ SAĞLIĞI VE GÜVENLİĞİ I adlı ders fakülte ortak ders kapsamında online olarak gerçekleştirilecektir. Bu nedenle bu dersi alan Bilgisayar Mühendisliği bölüm öğrencileri de TEAMS'de MUH002_ELEKTRİK-ELEKTRONİK MÜHENDİSLİĞİ_3 adlı ekipte derslerini ve sınavlarını takip edeceklerdir.").build());
         announcementService.create(Announcement.builder().title("Matematik I dersi hakkında").link("https://bilmuh.trakya.edu.tr/news/matematik-i-dersi-hakkinda").content("Bilgisayar Mühendisliği Matematik I dersi Matematik Bölümünde yapılacaktır.").build());
