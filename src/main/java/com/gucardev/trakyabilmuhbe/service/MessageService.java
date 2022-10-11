@@ -62,10 +62,11 @@ public class MessageService {
         messageRepository.delete(existing);
     }
 
-    public List<Message> getMessages(Channel channel) {
-        if (channel == null) {
+    public List<Message> getMessages(Long channelId) {
+        if (channelId == null) {
             return messageRepository.findAllByOrderByCreatedDateTimeDesc();
         }
+        var channel = channelService.getByID(channelId);
         return messageRepository.findAllByChannelOrderByCreatedDateTimeDesc(channel);
     }
 }

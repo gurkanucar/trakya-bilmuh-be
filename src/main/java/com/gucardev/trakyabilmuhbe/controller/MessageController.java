@@ -29,8 +29,8 @@ public class MessageController {
 
 
     @GetMapping
-    public ResponseEntity<List<MessageDto>> getMessages(@RequestParam(required = false) Channel channel) {
-        return ResponseEntity.ok(messageService.getMessages(channel).stream()
+    public ResponseEntity<List<MessageDto>> getMessages(@RequestParam(required = false) Long channelId) {
+        return ResponseEntity.ok(messageService.getMessages(channelId).stream()
                 .map(x -> modelMapper.map(x, MessageDto.class))
                 .collect(Collectors.toList()));
     }
