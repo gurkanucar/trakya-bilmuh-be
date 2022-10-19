@@ -62,7 +62,12 @@ public class SecurityConfig {
                 "/api/auth/login",
                 "/api/announcement",
                 "/api/channel",
-                "/api/message");
+                "/api/message",
+                "/swagger-resources/**",
+                "/swagger-ui.html/**",
+                "/swagger-resources/**",
+                "/swagger-ui/**",
+                "/v3/api-docs/**");
     }
 
     @Bean
