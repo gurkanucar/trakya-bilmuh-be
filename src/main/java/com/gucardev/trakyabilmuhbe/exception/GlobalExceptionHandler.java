@@ -30,6 +30,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.badRequest().body(errors);
     }
 
+    @ExceptionHandler(GeneralException.class)
+    public ResponseEntity<?> generalException(GeneralException exception) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("error", exception.getMessage());
+        return new ResponseEntity<>(errors, exception.getStatus());
+    }
+
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<?> userNotFoundException(UserNotFoundException exception) {
