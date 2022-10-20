@@ -27,8 +27,7 @@ public class AnnouncementService {
     }
 
     public Announcement update(Announcement announcement) {
-        Announcement existing = announcementRepository.findById(announcement.getId())
-                .orElseThrow(() -> new RuntimeException("announcement not found!"));
+        Announcement existing = getById(announcement.getId());
         existing.setContent(announcement.getContent());
         existing.setLink(announcement.getLink());
         existing.setTitle(announcement.getTitle());
@@ -37,8 +36,7 @@ public class AnnouncementService {
     }
 
     public void delete(Long id) {
-        Announcement existing = announcementRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("announcement not found!"));
+        Announcement existing = getById(id);
         announcementRepository.delete(existing);
     }
 
