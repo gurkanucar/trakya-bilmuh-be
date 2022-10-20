@@ -33,9 +33,14 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public Optional<User> findUserByID(Long id) {
-        return userRepository.findById(id);
+    public User findUserByID(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("user not found!"));
     }
+
+    public boolean doesUserExistByID(Long id) {
+        return userRepository.findById(id).isPresent();
+                 }
 
     public User findUserByUsername(String username) {
         return userRepository.findUserByUsername(username)
