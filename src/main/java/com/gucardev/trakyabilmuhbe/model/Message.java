@@ -1,19 +1,18 @@
 package com.gucardev.trakyabilmuhbe.model;
 
-import com.gucardev.trakyabilmuhbe.model.BaseEntity;
-import com.gucardev.trakyabilmuhbe.model.Channel;
-import com.gucardev.trakyabilmuhbe.model.User;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 @Data
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Message extends BaseEntity {
