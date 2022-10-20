@@ -17,6 +17,12 @@ Thanks to this project, students can join channels created by teachers and they 
   git clone https://github.com/gurkanucar/trakya-bilmuh-be
   cd trakya-bilmuh-be
 ```
+#### run tests
+
+
+```bash
+  mvn test
+```
 
 #### run app
 
