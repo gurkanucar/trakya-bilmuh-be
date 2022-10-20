@@ -5,11 +5,13 @@ import com.gucardev.trakyabilmuhbe.model.Channel;
 import com.gucardev.trakyabilmuhbe.model.Message;
 import com.gucardev.trakyabilmuhbe.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class MessageService {
 
@@ -19,11 +21,8 @@ public class MessageService {
     private final ChannelService channelService;
 
     public Message create(Message message) {
-        var user = userService.findUserByID(message.getUser().getId());
-        if (user.isEmpty()) {
-            throw new RuntimeException("user not found!");
-        } else if (!user.get().isApproved()) {
-            throw new RuntimeException("user not approved! Please contact with admin");
+        if(!userService.doesUserExistByID(message.getUser().getId())){
+            log.error("user not exists!");
         }
         var channel = channelService.getByID(message.getChannel().getId());
         message.setChannel(channel);
