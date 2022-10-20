@@ -21,7 +21,7 @@ public class MessageService {
     private final ChannelService channelService;
 
     public Message create(Message message) {
-        if(!userService.doesUserExistByID(message.getUser().getId())){
+        if (!userService.doesUserExistByID(message.getUser().getId())) {
             log.error("user not exists!");
         }
         var channel = channelService.getByID(message.getChannel().getId());
@@ -35,8 +35,7 @@ public class MessageService {
     }
 
     public Message update(Message message) {
-        Message existing = messageRepository.findById(message.getId())
-                .orElseThrow(() -> new RuntimeException("message not found!"));
+        Message existing = getById(message.getId());
         if (!authService.checkForPermission(existing.getUser().getId())) {
             throw new PermissionError("Permission not granted!");
         }
@@ -53,8 +52,7 @@ public class MessageService {
     }
 
     public void delete(Long id) {
-        Message existing = messageRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("message not found!"));
+        Message existing = getById(id);
         if (!authService.checkForPermission(existing.getUser().getId())) {
             throw new PermissionError("Permission not granted!");
         }
